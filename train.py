@@ -59,15 +59,14 @@ def main():
 
     # Create a TabularDataset from a URL
     url = 'https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
-    tabular_dataset = TabularDatasetFactory.from_delimited_files(url)
-    
-    # Register the TabularDataset as a datastore
-    datastore = workspace.register_dataset(tabular_dataset, name='bank_marketing_training')
-    
-    # Access the registered datastore  
-    ds = Datastore.get(workspace, 'bank_marketing_training')
-    
-    x, y = clean_data(ds)
+
+    # Create a TabularDatasetFactory object
+    factory = TabularDatasetFactory()
+
+    # Create a TabularDataset using the TabularDatasetFactory
+    tabular_dataset = factory.from_delimited_files(url)
+   
+    x, y = clean_data(tabular_dataset)
 
     # TODO: Split data into train and test sets.
 
