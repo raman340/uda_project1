@@ -55,13 +55,26 @@ def main():
     # Data is located at:
     # "https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv"
 
-    ds = ### YOUR CODE HERE ###
+    #ds = ### YOUR CODE HERE ###
+
+    # Create a TabularDataset from a URL
+    url = 'https://automlsamplenotebookdata.blob.core.windows.net/automl-sample-notebook-data/bankmarketing_train.csv'
+    tabular_dataset = TabularDatasetFactory.from_delimited_files(url)
+    
+    # Register the TabularDataset as a datastore
+    datastore = workspace.register_dataset(tabular_dataset, name='bank_marketing_training')
+    
+    # Access the registered datastore  
+    ds = Datastore.get(workspace, 'bank_marketing_training')
     
     x, y = clean_data(ds)
 
     # TODO: Split data into train and test sets.
 
-    ### YOUR CODE HERE ###a
+    # Assuming you have a feature matrix X and a target variable y
+    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+
+    ### YOUR CODE HERE ###
 
     model = LogisticRegression(C=args.C, max_iter=args.max_iter).fit(x_train, y_train)
 
